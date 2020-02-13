@@ -1,0 +1,22 @@
+{
+  "name": "alivehost",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "dockerode": "^3.1.0",
+    "nodemailer": "^6.4.2"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.0.2-beta2",
+    "@types/dockerode": "^2.5.22",
+    "@types/nodemailer": "^6.4.0",
+    "typescript": "^3.3.3"
+  }
+}

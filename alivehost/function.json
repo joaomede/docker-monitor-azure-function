@@ -1,0 +1,11 @@
+{
+  "bindings": [
+    {
+      "name": "myTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 30 9 * * *"
+    }
+  ],
+  "scriptFile": "../dist/alivehost/index.js"
+}
