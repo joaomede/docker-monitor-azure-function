@@ -1,6 +1,7 @@
 import { AzureFunction, Context } from '@azure/functions'
 import Dockerode = require('dockerode')
 import nodemailer = require('nodemailer')
+import Mail = require('nodemailer/lib/mailer')
 
 const user = process.env.EMAIL
 const pass = process.env.PASSWORDSMTP
@@ -8,14 +9,19 @@ const targetEmail = process.env.TARGETEMAIL
 const dockerHost = process.env.DOCKERHOST
 const dockerPort = process.env.DOCKERPORT
 
-const mail = nodemailer.createTransport({
-  service: 'gmail',
-  secure: false,
-  auth: { user, pass },
-  tls: {
-    rejectUnauthorized: false
-  }
-})
+function mail (): Mail {
+  return nodemailer.createTransport({
+    service: 'gmail',
+    secure: false,
+    auth: {
+      user,
+      pass
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  })
+}
 
 function createInstance (): Dockerode {
   return new Dockerode({
@@ -27,7 +33,7 @@ function createInstance (): Dockerode {
 
 async function sendEmail (email: string, message: string, errorMessage: string, context: Context): Promise<void> {
   try {
-    await mail.sendMail({
+    await mail().sendMail({
       to: email,
       from: `"Docker Checker" <${user}>`,
       subject: 'Docker Alive Message',
@@ -51,17 +57,16 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
     context.log(`O Docker do servidor Azure está ${testping.toString()}`)
     await sendEmail(
       targetEmail,
-            `O Docker do servidor Azure está ${testping.toString()}`,
-            'Erro ao tentar enviar email',
-            context
+      `O Docker do servidor Azure está ${testping.toString()}`,
+      'Erro ao tentar enviar email',
+      context
     )
   } catch (error) {
     context.log(`Erro no servidor Docker ${error.message}`)
     await sendEmail(
-      targetEmail,
-            `Erro no servidor Docker ${error.message}`,
-            'Erro ao tentar enviar email',
-            context
+      targetEmail, `Erro no servidor Docker ${error.message}`,
+      'Erro ao tentar enviar email',
+      context
     )
   }
   // if (myTimer.IsPastDue) {
