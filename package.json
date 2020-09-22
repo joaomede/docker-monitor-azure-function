@@ -10,12 +10,12 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "dockerode": "^3.1.0",
-    "nodemailer": "^6.4.2"
+    "dockerode": "^3.2.1",
+    "nodemailer": "^6.4.11"
   },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
-    "@types/dockerode": "^2.5.22",
+    "@types/dockerode": "^2.5.34",
     "@types/nodemailer": "^6.4.0",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
